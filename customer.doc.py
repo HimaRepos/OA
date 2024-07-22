@@ -1,0 +1,115 @@
+import string
+import math
+  
+class carrental:
+    print("Welcome to Hima's car rental system")
+    def car():
+      
+        print()
+menu=['Toyota',' Honda ',' Dodge ',' Tesla ',' BMW  ']
+year=[2024, 2024, 2023, 2023, 2024, 2023]
+type=['Suv', 'Van', 'Sedan', 'carvana', 'suv']
+print('Car',  '  model year', 'Type', sep='\t')
+for cc in range(len(menu)):
+    print(str(cc+1) + '.'+menu[cc], year[cc],type[cc],sep='\t')
+
+print()
+
+car_rental=0
+shopping_cart=[]
+rental_days=[]
+amount=[]
+miles=[]
+
+while car_rental==0:
+    order=int(input('Enter 1 to 5 to select a car, 6 option to proceed to check out\n'))
+    if order<=5:
+        #print('user is still viewing cars')
+        print('You have selected:',menu[order-1],year[order-1],type[order-1])
+        days=int(input('How many days you want to rent this car?\n'))
+        while True:
+                try:
+                    start_odometer=int(input("starting odometer:"))
+                    end_odometer=int(input("Ending odometer:"))
+                    miles_driven = end_odometer-start_odometer
+                    miles.append(miles_driven)
+                except ValueError:
+                    print("Not an integer")
+                    continue
+                else:
+                    break     
+        if menu[order-1] in shopping_cart:
+            print('Repeated selection')
+            id=shopping_cart.index(menu[order-1])
+            print(id)
+            rental_days[id]+=days
+        else:
+            print('You want to rent another car from selected menu')
+            shopping_cart.append(menu[order-1])
+            rental_days.append(days) #quant)
+    elif order==6:
+        print('Thank You and proceeding to checkout')
+        car_rental=1
+    else:
+        print('Invalid input')
+        
+
+print('Driven miles:',miles)
+amount_due=0
+while amount_due==0:
+        print("You will only recieve the latest selection amount to be paid")
+        code=input("Choose h for hourly, D for daily, W for weekly,or Q for quit:")       
+        if code[0].lower()=="d":
+            print("You choose daily")
+            if miles_driven<100:
+                amount_due=60*days
+                price=amount.append(amount_due)
+                print('Total daily amount due is $',price)
+                print(amount)
+            else:
+                amount_due=60*days+0.25*(miles_driven-100)
+                print('Total daily amount due is $',amount_due)
+                break
+        elif code[0].lower()=="h":
+            print("You choose hourly")
+            hours=days*24
+            amount_due=10*hours+0.25*miles_driven
+            print('Total hourly amount due in $',amount_due)
+            break
+        elif code[0].lower()=="w":
+            print("You choose weekly")
+            weeks=days/7
+            weeks_round=math.ceil(weeks)
+            print(weeks_round)
+            if miles_driven<900:
+                amount_due=weeks_round*190
+                print('Total weekly amount due in $',amount_due)
+            elif miles_driven>=900 and miles_driven <1500:
+                amount_due=weeks_round*190+100
+                print('Total weekly amount due in $',amount_due)
+            else:
+                amount_due=weeks_round*190+200+(miles_driven-1500)*25
+                print('Total weekly amount due in $',amount_due)
+                break
+        elif code[0].lower()=="q":
+            print("You choose quit")
+            break
+        else:
+            print("You must choose B, d, w, q")
+            continue
+print('Car',  'Days', 'amount', sep='\t')
+for cc in range(len(shopping_cart)):
+        idx=menu.index(shopping_cart[cc])
+        print('idx:',idx)
+        print(shopping_cart[cc],rental_days[cc] ,amount_due,sep='\t')
+
+        
+
+
+
+
+
+
+    
+    
+    
